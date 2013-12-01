@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{title}{another}</title>
+        <script>
+        var foo = { foo: "bar" };
+        var bar = {};
+        </script>
+    </head>
+    <body>
+        {body}
+    </body>
+</html>

@@ -29,7 +29,9 @@ function get(filename, callback) {
 var TokenizerStatus = {
     ECHO: {},
     MAYBE_CONTROL: {},
-    CONTROL: {}
+    CONTROL: {},
+    COMMENT: {},
+    COMMENT_MAYBE_END: {}
 };
 
 var TokenType = {
@@ -69,6 +71,7 @@ function Tokenizer(template) {
                 if (c === "{") status = TokenizerStatus.MAYBE_CONTROL;
                 tokenLength++;
                 break;
+                
             case TokenizerStatus.MAYBE_CONTROL:
                 if (c === -1) {
                     // always at least "{" character
@@ -80,7 +83,7 @@ function Tokenizer(template) {
                     status = TokenizerStatus.ECHO;
                     tokenLength++;
                 }
-                else { // start a control token
+                else { // start a control token or a comment
                     // return the previous echo token, if it isn't empty
                     if (tokenLength > 1) {
                         if (!tokenReturned) {
@@ -90,13 +93,19 @@ function Tokenizer(template) {
                         tokenReturned = false;
                     }
                     
-                    status = TokenizerStatus.CONTROL;
-                    
-                    // include current character
-                    tokenStart = pos - 1;
-                    tokenLength = 1;
+                    if (c !== "*") {
+                        status = TokenizerStatus.CONTROL;
+                        
+                        // include current character
+                        tokenStart = pos - 1;
+                        tokenLength = 1;
+                    }
+                    else {
+                        status = TokenizerStatus.COMMENT;
+                    }
                 }
                 break;
+                
             case TokenizerStatus.CONTROL:
                 if (c === -1) {
                     throw {}; // @todo throw something better!
@@ -118,6 +127,21 @@ function Tokenizer(template) {
                     // @todo check for } in quotes
                     tokenLength++;
                 }
+                break;
+                
+            case TokenizerStatus.COMMENT:
+                if (c === -1) return null;
+                if (c === "*") status = TokenizerStatus.COMMENT_MAYBE_END;
+                break;
+                
+            case TokenizerStatus.COMMENT_MAYBE_END:
+                if (c === -1) return null;
+                if (c === "}") {
+                    status = TokenizerStatus.ECHO;
+                    tokenStart = pos;
+                    tokenLength = 0;
+                }
+                else if (c !== "*") status = Tokenizer.COMMENT;
                 break;
             }
         }

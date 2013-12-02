@@ -2,11 +2,11 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>{title}{another}</title>
-        <script>
+        <title>{title}</title>
+        {*<script>
         var foo = { foo: "bar" };
         var bar = {};
-        </script>
+        </script>*}
     </head>
     <body>
         {body}

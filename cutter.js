@@ -32,6 +32,9 @@ var TokenizerStatus = {
     CONTROL: {},
     CONTROL_QUOTES_DOUBLE: {},
     CONTROL_QUOTES_SINGLE: {},
+    CONTROL_IDENTFR_FIRST: {},
+    CONTROL_IDENTFR_NEXT: {},
+    CONTROL_IDENTFR_DOT: {},
     COMMENT: {},
     COMMENT_MAYBE_END: {}
 };
@@ -56,8 +59,11 @@ function Tokenizer(template) {
     var tokenReturned = false;
     var tokenLength = 0;
     var tokenStart;
+    
+    // status variables for control token
     var braces = 0;
     var quotesEscape = false;
+    var identifierStatus = 0;
     
     this.nextToken = function() {
         tokenStart = pos;
@@ -105,6 +111,9 @@ function Tokenizer(template) {
                         tokenLength = 1;
                         
                         braces = (c === "{") ? 2 : 1;
+                        
+                        if (c === "\"") status = TokenizerStatus.CONTROL_QUOTES_DOUBLE;
+                        else if (c === "\'") status = TokenizerStatus.CONTROL_QUOTES_SINGLE;
                     }
                     else {
                         status = TokenizerStatus.COMMENT;
@@ -193,6 +202,14 @@ function Tokenizer(template) {
     }
 }
 
+/** Processes the token and transforms it somehow, if needed. */
+Token.prototype.transform = function() {
+    if (this.type == TokenType.ECHO) return this;
+    
+    // control token
+    return this;
+}
+
 /** Compiles the template and returns JavaScript source code. */
 function compile(template) {
     var js = "\"use strict\";\n";
@@ -200,6 +217,8 @@ function compile(template) {
     
     var token;
     while (token = tokenizer.nextToken()) {
+        // a control token can mean a lot of things (write, if, loop etc.)
+        token = token.transform();
         console.log(token.type.name + ": " + token.content);
     }
     

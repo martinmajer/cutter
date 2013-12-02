@@ -32,9 +32,6 @@ var TokenizerStatus = {
     CONTROL: {},
     CONTROL_QUOTES_DOUBLE: {},
     CONTROL_QUOTES_SINGLE: {},
-    CONTROL_IDENTFR_FIRST: {},
-    CONTROL_IDENTFR_NEXT: {},
-    CONTROL_IDENTFR_DOT: {},
     COMMENT: {},
     COMMENT_MAYBE_END: {}
 };

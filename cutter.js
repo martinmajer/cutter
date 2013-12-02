@@ -30,6 +30,8 @@ var TokenizerStatus = {
     ECHO: {},
     MAYBE_CONTROL: {},
     CONTROL: {},
+    CONTROL_QUOTES_DOUBLE: {},
+    CONTROL_QUOTES_SINGLE: {},
     COMMENT: {},
     COMMENT_MAYBE_END: {}
 };
@@ -54,6 +56,8 @@ function Tokenizer(template) {
     var tokenReturned = false;
     var tokenLength = 0;
     var tokenStart;
+    var braces = 0;
+    var quotesEscape = false;
     
     this.nextToken = function() {
         tokenStart = pos;
@@ -99,6 +103,8 @@ function Tokenizer(template) {
                         // include current character
                         tokenStart = pos - 1;
                         tokenLength = 1;
+                        
+                        braces = (c === "{") ? 2 : 1;
                     }
                     else {
                         status = TokenizerStatus.COMMENT;
@@ -112,7 +118,7 @@ function Tokenizer(template) {
                 }
                 
                 // closing brace => return the token
-                if (c === "}") {
+                if (c === "}" && braces === 1) {
                     if (!tokenReturned) {
                         pos--; tokenReturned = true;
                         return new Token(TokenType.CONTROL, template.substr(tokenStart, tokenLength));
@@ -122,10 +128,47 @@ function Tokenizer(template) {
                     status = TokenizerStatus.ECHO;
                     tokenStart++;
                     tokenLength = 0;
+                    braces = 0;
                 }
                 else { // other characters => continue...
                     // @todo check for } in quotes
                     tokenLength++;
+                    if (c === "{") braces++;
+                    else if (c === "}") braces--;
+                    else if (c === "\"") status = TokenizerStatus.CONTROL_QUOTES_DOUBLE;
+                    else if (c === "\'") status = TokenizerStatus.CONTROL_QUOTES_SINGLE;
+                }
+                break;
+                
+            case TokenizerStatus.CONTROL_QUOTES_DOUBLE:
+                if (c === -1) {
+                    throw {}; // @todo throw something better!
+                }
+                
+                tokenLength++;
+                
+                if (c === "\\") {
+                    quotesEscape = !quotesEscape;
+                }
+                else {
+                    if (c === "\"" && !quotesEscape) status = TokenizerStatus.CONTROL;
+                    quotesEscape = false;
+                }
+                break;
+                
+            case TokenizerStatus.CONTROL_QUOTES_SINGLE:
+                if (c === -1) {
+                    throw {}; // @todo throw something better!
+                }
+                
+                tokenLength++;
+                
+                if (c === "\\") {
+                    quotesEscape = !quotesEscape;
+                }
+                else {
+                    if (c === "'" && !quotesEscape) status = TokenizerStatus.CONTROL;
+                    quotesEscape = false;
                 }
                 break;
                 

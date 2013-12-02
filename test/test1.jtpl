@@ -9,6 +9,6 @@
         </script>*}
     </head>
     <body>
-        {body}
+        {(function() {return "}}\"foo\"{{";}())}
     </body>
 </html>

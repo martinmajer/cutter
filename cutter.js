@@ -199,6 +199,14 @@ function Tokenizer(template) {
     }
 }
 
+/** Finds all identifiers (variables) starting with $ */
+Token.prototype.identifiers = function() {
+    if (this.type != TokenType.CONTROL) return null;
+    
+    // @todo better search for identifiers
+    return this.content.match(/\$[a-zA-Z0-9_]+/g);
+}
+
 /** Processes the token and transforms it somehow, if needed. */
 Token.prototype.transform = function() {
     if (this.type == TokenType.ECHO) return this;
@@ -212,14 +220,22 @@ function compile(template) {
     var js = "\"use strict\";\n";
     var tokenizer = new Tokenizer(template);
     
+    var globalIdentifiers = {}; // set of all global identifiers
+    
     var token;
     while (token = tokenizer.nextToken()) {
+        var identifiers = token.identifiers();
+        if (identifiers) {
+            for (var i = 0; i < identifiers.length; i++) {
+                globalIdentifiers[identifiers[i]] = true;
+            }
+        }
+        
         // a control token can mean a lot of things (write, if, loop etc.)
         token = token.transform();
-        console.log(token.type.name + ": " + token.content);
     }
     
-    // @todo process the tokens and build .js
+    console.log(globalIdentifiers);
     
     return js;
 }

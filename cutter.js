@@ -27,7 +27,7 @@ function get(filename, callback) {
 }
 
 var TokenizerStatus = {
-    ECHO: {},
+    STATIC: {},
     MAYBE_CONTROL: {},
     CONTROL: {},
     CONTROL_QUOTES_DOUBLE: {},
@@ -37,8 +37,16 @@ var TokenizerStatus = {
 };
 
 var TokenType = {
-    ECHO: { name: "echo" },
-    CONTROL: { name: "control" }
+    STATIC: { name: "static" },
+    CONTROL: { name: "control" },
+    INLINE_JAVASCRIPT: { name: "inline_js" },
+    WRITE: { name: "write" },
+    IF: { name: "if" },
+    ELSE: { name: "else" },
+    FOR: { name: "for" },
+    FOREACH: { name: "foreach" },
+    WHILE: { name: "while" },
+    END: { name: "block_end" } 
 };
 
 /** Token object. */
@@ -50,7 +58,7 @@ function Token(type, content) {
 /** Structure for parser data. */
 function Tokenizer(template) {
     // @todo skip BOM
-    var status = TokenizerStatus.ECHO;
+    var status = TokenizerStatus.STATIC;
     var pos = 0;
     var length = template.length;
     var tokenReturned = false;
@@ -69,9 +77,9 @@ function Tokenizer(template) {
             var c = pos < length ? template.charAt(pos++) : (pos++, -1);
             
             switch (status) {
-            case TokenizerStatus.ECHO:
+            case TokenizerStatus.STATIC:
                 if (c === -1) {
-                    if (tokenLength) return new Token(TokenType.ECHO, template.substr(tokenStart, tokenLength));
+                    if (tokenLength) return new Token(TokenType.STATIC, template.substr(tokenStart, tokenLength));
                 }
                 
                 // opening brace => could mean some dynamic content
@@ -82,20 +90,20 @@ function Tokenizer(template) {
             case TokenizerStatus.MAYBE_CONTROL:
                 if (c === -1) {
                     // always at least "{" character
-                    return new Token(TokenType.ECHO, template.substr(tokenStart, tokenLength));
+                    return new Token(TokenType.STATIC, template.substr(tokenStart, tokenLength));
                 }
                 
                 // whitespace or } => continue with static content
                 if (c === " " || c === "\f" || c === "\n" || c === "\r" || c === "\t" || c === "}") {
-                    status = TokenizerStatus.ECHO;
+                    status = TokenizerStatus.STATIC;
                     tokenLength++;
                 }
                 else { // start a control token or a comment
-                    // return the previous echo token, if it isn't empty
+                    // return the previous STATIC token, if it isn't empty
                     if (tokenLength > 1) {
                         if (!tokenReturned) {
                             pos--; tokenReturned = true;
-                            return new Token(TokenType.ECHO, template.substr(tokenStart, tokenLength - 1)); // without {
+                            return new Token(TokenType.STATIC, template.substr(tokenStart, tokenLength - 1)); // without {
                         }
                         tokenReturned = false;
                     }
@@ -131,7 +139,7 @@ function Tokenizer(template) {
                     }
                     tokenReturned = false;
                     
-                    status = TokenizerStatus.ECHO;
+                    status = TokenizerStatus.STATIC;
                     tokenStart++;
                     tokenLength = 0;
                     braces = 0;
@@ -186,7 +194,7 @@ function Tokenizer(template) {
             case TokenizerStatus.COMMENT_MAYBE_END:
                 if (c === -1) return null;
                 if (c === "}") {
-                    status = TokenizerStatus.ECHO;
+                    status = TokenizerStatus.STATIC;
                     tokenStart = pos;
                     tokenLength = 0;
                 }
@@ -209,10 +217,42 @@ Token.prototype.identifiers = function() {
 
 /** Processes the token and transforms it somehow, if needed. */
 Token.prototype.transform = function() {
-    if (this.type == TokenType.ECHO) return this;
+    if (this.type == TokenType.STATIC) return;
     
     // control token
-    return this;
+    var content = this.content.trim();
+    
+    if (content.charAt(0) == ">") {
+        this.type = TokenType.INLINE_JS;
+        this.content = content.substr(1).trim();
+    }
+    else if (content.charAt(0) == "/") {
+        this.type = TokenType.END;
+        this.content = content.substr(1).trim();
+    }
+    else if (content.match(/^if(\W|$)/g)) {
+        this.type = TokenType.IF;
+        this.content = content.substr(2).trim();
+    }
+    else if (content.match(/^else(\W|$)/g)) {
+        this.type = TokenType.ELSE;
+        this.content = content.substr(4).trim();
+    }
+    else if (content.match(/^for(\W|$)/g)) {
+        this.type = TokenType.FOR;
+        this.content = content.substr(3).trim();
+    }
+    else if (content.match(/^foreach(\W|$)/g)) {
+        this.type = TokenType.FOREACH;
+        this.content = content.substr(7).trim();
+    }
+    else if (content.match(/^while(\W|$)/g)) {
+        this.type = TokenType.WHILE;
+        this.content = content.substr(5).trim();
+    }
+    else {
+        this.type = TokenType.WRITE;
+    }
 }
 
 /** Compiles the template and returns JavaScript source code. */
@@ -232,7 +272,8 @@ function compile(template) {
         }
         
         // a control token can mean a lot of things (write, if, loop etc.)
-        token = token.transform();
+        token.transform();
+        console.log(token);
     }
     
     console.log(globalIdentifiers);

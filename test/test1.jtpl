@@ -14,7 +14,7 @@
             {(function() {return "}}\"foo\"{{";}())}
         {else}
             {foreach key in $data}
-                {$data[key]}
+                {@$data[key]}
             {/}
         {/}
     </body>

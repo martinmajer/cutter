@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{$title}</title>
+    </head>
+    <body>
+        {virtual content}
+        {virtual footer}
+        
+        {section footer}
+            &copy; 2013 default footer.
+        {/section}
+    </body>
+</html>
+

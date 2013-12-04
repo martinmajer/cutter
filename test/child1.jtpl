@@ -1,0 +1,9 @@
+{parent parent.jtpl}
+{section content}
+    <p>Here is the content.</p>
+    <p>The variable is "{$myVar}".</p>
+{/section}
+{section footer}
+    Overriden footer.
+{/section}
+

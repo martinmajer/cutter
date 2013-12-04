@@ -1,4 +1,4 @@
-cutter
+Cutter
 ======
 
-Simple and powerful template engine for Node.js
+Simple but powerful template engine for Node.js. Under construction!

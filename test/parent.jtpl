@@ -10,7 +10,7 @@
         
         {section footer}
             &copy; 2013 default footer.
-        {/section}
+        {/}
     </body>
 </html>
 

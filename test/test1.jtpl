@@ -3,13 +3,8 @@
     <head>
         <meta charset="utf-8">
         <title>{$title}</title>
-        {*<script>
-        var foo = { foo: "bar" };
-        var bar = {};
-        </script>*}
     </head>
-    <body>
-        {> var variable = "foo.bar"; }
+    <body class="{$bodyClass}">
         {if $showSomething}
             {(function() {return "}}\"foo\"{{";}())}
         {else}

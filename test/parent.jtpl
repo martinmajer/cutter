@@ -5,8 +5,14 @@
         <title>{$title}</title>
     </head>
     <body>
-        {section content}{/}
+        {section content}
+            {if $a}Section content test!{/}
+        {/}
         {virtual content}
+        
+        {for var i = 0; i < $array.length; i++}
+            {$array[i]}
+        {/for}
         
         {section footer}
             &copy; 2013 default footer.

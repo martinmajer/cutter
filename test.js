@@ -14,7 +14,7 @@ function outputCallback(snippet, text) {
 
 cutter.get("./test/parent.jtpl", function(err, template) {
     // do something with the template
-    cutter.run(template, { title: "Hello world", }, null, outputCallback);
+    cutter.run(template, { title: "Hello world", a: true, b: true, array: [1, 2, 3, 4, 5] }, null, outputCallback);
     console.log(output);
 });
 

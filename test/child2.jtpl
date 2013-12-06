@@ -2,11 +2,11 @@
 
 {section nextVirtual}
     <p>Hello world!</p>
-{/section}
+{/}
 
 {if $a}
     {section footer}
-        {cutout "super-footer"}Super footer.{/cutout}
+        {cutout "super-footer"}Super footer.{/}
     {/}
 {/}
 

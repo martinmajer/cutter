@@ -42,7 +42,7 @@ Simple and powerful template engine for Node.js. **Under construction!**
 {* while loop *}
 {> var i = 0}
 {while i < meaningOfLife}
-    {$gizmo.hoozit[i]}
+    {$gizmo.hoozit[i++]}
 {/}
 
 {* for loop *}

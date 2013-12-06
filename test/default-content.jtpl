@@ -1,0 +1,3 @@
+{section content}
+    {if $a}Section content test!{/}
+{/}

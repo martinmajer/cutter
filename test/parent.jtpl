@@ -6,11 +6,15 @@
         <title>{$title}</title>
     </head>
     <body>
-        {virtual content}
-        
-        {for var i = 0; i < $array.length; i++}
-            {$array[i]}
-        {/for}
+        {cutout "body"}
+            {virtual content}
+            
+            {for var i = 0; i < $array.length; i++}
+                {cutout "row-"+i}
+                    {$array[i]}
+                {/}
+            {/}
+        {/}
         
         {section footer}
             &copy; 2013 default footer.
@@ -18,3 +22,4 @@
         {virtual footer}
     </body>
 </html>
+

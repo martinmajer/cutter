@@ -6,7 +6,7 @@
 
 {if $a}
     {section footer}
-        Super footer.
+        {cutout "super-footer"}Super footer.{/cutout}
     {/}
 {/}
 

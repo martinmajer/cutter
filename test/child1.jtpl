@@ -1,9 +1,11 @@
 {parent parent.jtpl}
+
 {section content}
     <p>Here is the content.</p>
-    <p>The variable is "{$myVar}".</p>
+    <p>The variable is "{$a}".</p>
+    {virtual nextVirtual}
 {/}
 {section footer}
     Overriden footer.
 {/}
-{/}
+

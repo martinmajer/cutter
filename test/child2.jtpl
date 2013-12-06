@@ -1,0 +1,12 @@
+{parent child1.jtpl}
+
+{section nextVirtual}
+    <p>Hello world!</p>
+{/section}
+
+{if $a}
+    {section footer}
+        Super footer.
+    {/}
+{/}
+

@@ -5,7 +5,9 @@
 {/}
 
 {section footer}
-    {cutout "super-footer"}Super footer.{/}
-    {virtual parent}
+    {cutout "super-footer"}
+        Super footer.
+        {virtual parent}
+    {/}
 {/}
 

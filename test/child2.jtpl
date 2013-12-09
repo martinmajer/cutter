@@ -4,9 +4,8 @@
     <p>Hello world!</p>
 {/}
 
-{if $a}
-    {section footer}
-        {cutout "super-footer"}Super footer.{/}
-    {/}
+{section footer}
+    {cutout "super-footer"}Super footer.{/}
+    {virtual parent}
 {/}
 

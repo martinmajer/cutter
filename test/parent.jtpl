@@ -6,16 +6,8 @@
         <title>{$title}</title>
     </head>
     <body>
-        {cutout "body"}
-            {virtual content}
-            
-            {for var i = 0; i < $array.length; i++}
-                {cutout "row-"+i}
-                    {$array[i]}
-                {/}
-            {/}
-        {/}
-        
+        {virtual content}    
+    
         {section footer}
             &copy; 2013 default footer.
         {/}

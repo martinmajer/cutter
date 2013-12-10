@@ -19,7 +19,7 @@ cutter.get("./test/child2.jtpl", function(err, template) {
         return;
     }
     // do something with the template
-    cutter.run(template, { a: true, b: true, array: [1, 2, 3, 4, 5] }, null, outputCallback);
+    cutter.run(template, { a: true, b: true, array: [1, 2, 3, 4, 5], html: "<p>hello world</p>" }, null, outputCallback);
     if (output) console.log(output);
     if (Object.keys(snippets).length) console.log(snippets);
 });

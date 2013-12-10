@@ -6,16 +6,6 @@
     </head>
     <body>
         {virtual content}    
-    
-        {section recursive}
-            N = {$n}, F = {$fac}
-            {if $n > 1}
-                {virtual this | n: $n-1, fac: $n*$fac }
-            {/}
-        {/}
-        {virtual recursive | n: 10, fac: 1}
-        
-        {include ./included.jtpl | variable: 1000}
         
         {section footer}
             &copy; 2013 default footer.

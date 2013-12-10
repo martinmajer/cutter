@@ -1,4 +1,4 @@
-{parent parent.jtpl}
+{parent parent.jtpl | title: $title || "Foo bar"}
 
 {section content}
     <p>Here is the content.</p>

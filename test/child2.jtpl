@@ -1,4 +1,4 @@
-{parent child1.jtpl}
+{parent child1.jtpl | title: "Test"}
 
 {section nextVirtual}
     <p>Hello world!</p>

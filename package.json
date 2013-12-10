@@ -1,5 +1,5 @@
 {
-    "name": "cutter-templates",
+    "name": "cutter",
     "version": "0.1.0",
     "author": "Martin Majer <martin@martinmajer.net>",
     "description": "Simple and powerful template engine for Node.js",

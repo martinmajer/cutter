@@ -7,26 +7,36 @@ Simple and powerful template engine for Node.js. **Under construction!**
 ### Features
 
 
-- Simple and fast
+- Familiar Smarty-inspired syntax
 - Auto escaping all template variables
 - Inline JavaScript code
 - Syntactic sugar for conditions and loops
 - Template inheritance and recursive includes
 - Template cutouts!
 - Custom-defined template tags
-- Compiles to JavaScript code
-- Familiar Smarty-inspired syntax
+- Fast - compiles to JavaScript code
 
+
+### Basic usage
+
+
+```javascript
+var cutter = require("cutter");
+cutter.get("your-template.jtpl", function(err, template) {
+    var data = { "foo": "bar" };
+    var output = template.fetch(data);
+});
+```
 
 
 ### Syntax overview
 
 ```smarty
 {* template variable output *}
-{$foo.bar}
+{$foo}
 
 {* unescaped template variable with HTML *}
-{@$foo.bar}
+{@$foo}
 
 {* inline JavaScript, local variable output *}
 {> var meaningOfLife = 42; }

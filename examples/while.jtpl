@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Hello world</title>
+    </head>
+    <body>
+        {> var i = 0}
+        {while i < $array.length}
+            array[{i}] = {$array[i]}
+            {> i++}
+        {/}
+    </body>
+</html>
+

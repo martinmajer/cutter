@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Hello world</title>
+    </head>
+    <body>
+        {section list}
+            <ul>
+                {for var i = 0; i < $list.length; i++}
+                    {if $list[i] instanceof Array}
+                        <li>
+                            {virtual this | list: $list[i]}
+                        </li>   
+                    {else}
+                        <li>{$list[i]}</li>         
+                    {/}
+                {/}
+            </ul>
+        {/}
+        
+        {* Call the virtual section recursively *}
+        {virtual list | list: [ "first", "second", [ "nested one", "nested two" ], "third" ] }
+    </body>
+</html>
+

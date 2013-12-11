@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{$title || "Default title"}</title>
+    </head>
+    <body>
+        {virtual content}
+        
+        {section footer}
+            &copy; 2013 cutter templates
+        {/}
+        {virtual footer}
+    </body>
+</html>
+

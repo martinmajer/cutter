@@ -1,0 +1,11 @@
+{parent parent.jtpl | title: "Hello " + $hello}
+
+{section content}
+    This page has a different footer.
+{/}
+
+{section footer}
+    {virtual parent}
+    Text appended to the footer.
+{/}
+

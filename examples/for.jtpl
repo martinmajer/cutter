@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Hello world</title>
+    </head>
+    <body>
+        {for var i = 0; i < $array.length; i++}
+            array[{i}] = {$array[i]}
+        {/}
+    </body>
+</html>
+

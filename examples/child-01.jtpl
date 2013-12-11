@@ -1,0 +1,6 @@
+{parent parent.jtpl | title: "Child title"}
+
+{section content}
+    Hello world!
+{/}
+

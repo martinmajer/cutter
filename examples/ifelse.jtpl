@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Hello world</title>
+    </head>
+    <body>
+        {if $hello === "world"}
+            Hello, world!
+        {/}
+        
+        {if $gizmo === "hoozit"}
+            Hoozit.
+        {elseif $gizmo === "gizmo"}
+            Gizmo.
+        {else}
+            {$gizmo}
+        {/}
+    </body>
+</html>
+

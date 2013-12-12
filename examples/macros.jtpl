@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Hello world</title>
+    </head>
+    <body>
+        <h1>{#filter-me}Hello world{/}</h1>
+        {#filter-me}{$html}{/}
+        
+        {#form "myForm" | action: "/test/action"}
+            {#input "myInput" | value: 42}
+            {#submit}
+        {/}
+    </body>
+</html>
+

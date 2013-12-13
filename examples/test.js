@@ -16,7 +16,7 @@ var data = {
 };
 cutter.get(templateFile, function(err, template) {
     if (err) {
-        throw err;
+        console.log(err); return;
     }
     console.log(template.fetch(data));
 });

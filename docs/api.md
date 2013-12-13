@@ -18,7 +18,7 @@ Loads and compiles the specified template file asynchronously. This function als
 
 ## `cutter.CompilerException`
 
-Exception which can be raised by the template compiler.
+Exception which can be raised by the template compiler (preprocessor).
 
 #### Properties
 

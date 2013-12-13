@@ -44,8 +44,7 @@ var data = {
 
 cutter.get("macros.jtpl", function(err, template) {
     if (err) {
-        console.log(err.message + " at " + err.filename + ":" + err.line);
-        return;
+        throw err;
     }
     console.log(template.fetch(data));
 });

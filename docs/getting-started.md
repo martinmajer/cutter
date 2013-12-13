@@ -35,12 +35,28 @@ cutter.get("your-template.jtpl", function(err, template) {
 });
 ```
 
+The result will be:
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Hello world</title>
+    </head>
+    <body>
+        <h1>Hello world</h1>
+        <p>The quick brown fox jumps over the lazy dog.</p>
+    </body>
+</html>
+```
+
 
 How this works?
 -------------------
 
 - The template file is parsed and compiled to JavaScript code, then executed with the [vm](http://nodejs.org/api/vm.html) module. Evaluation of the JavaScript code produces a module-like structure which is (repeatedly) used to render the template.
-- Template data variables are accessible via `$` prefix - `$title` means `data.title`.
+- Template data variables are accessible via `$` prefix - `$title` in the template code means `data.title`.
 - `{$title}` writes the contents of `data.title`, which is `Hello world`.
 - All output is auto-escaped to prevent XSS attacks. However, it can be turned off - `@` modifier in `{@$content}` means that `<p>` and `</p>` won't be converted to `&lt;p&gt;` and `&lt;/p&gt;`.
 

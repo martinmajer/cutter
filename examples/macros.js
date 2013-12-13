@@ -6,11 +6,11 @@ var exec_utils = cutter.exec_utils;
 
 cutter.registerMacro("form", new Macro(
     Macro.Type.PAIRED,
-    function(context, write, name, params) {
+    function(context, namespace, write, name, params) {
         context.stack.push(name); // push form name to the stack
         write("<form name=\"" + exec_utils.htmlEl(name) + "\" action=\"" + exec_utils.htmlEl(params.action) + "\">");
     },
-    function(context, write) {
+    function(context, namespace, write) {
         context.stack.pop();
         write("</form>");
     }
@@ -18,14 +18,14 @@ cutter.registerMacro("form", new Macro(
 
 cutter.registerMacro("input", new Macro(
     Macro.Type.SINGLE,
-    function(context, write, name, params) {
+    function(context, namespace, write, name, params) {
         write("<input type=\"text\" name=\"" + exec_utils.htmlEl(name) + "\" value=\"" + exec_utils.htmlEl(params.value) + "\">");
     }
 ));
 
 cutter.registerMacro("submit", new Macro(
     Macro.Type.SINGLE,
-    function(context, write, name, params) {
+    function(context, namespace, write, name, params) {
         var label = "Submit " + context.stack[context.stack.length-1];
         write("<button type=\"submit\">" + exec_utils.html(label) + "</button>");
     }
@@ -33,7 +33,7 @@ cutter.registerMacro("submit", new Macro(
 
 cutter.registerMacro("filter-me", new Macro(
     Macro.Type.FILTER,
-    function(context, name, params, input) {
+    function(context, namespace, name, params, input) {
         return "Filtered '" + input + "'";
     }
 ));

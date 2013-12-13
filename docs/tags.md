@@ -42,31 +42,31 @@ This macro can contain any JavaScript code. It can span multiple lines.
 
 ### `{if <condition>}`
 
-Creates an if statement. Translates to `if (<condition>)`.
+Creates an if statement. Translates to `if (<condition>) { ... }`.
 
 ### `{elseif <condition>}`
 
-Else if branch of a previous if statement. Translates to `else if (<condition>)`.
+Else if branch of a previous if statement. Translates to `else if (<condition>) { ... }`.
 
 ### `{else}`
 
-Else branch of a previous if statement. Translates to `else`.
+Else branch of a previous if statement. Translates to `else { ... }`.
 
 ### `{while <condition>}`
 
-Creates a while loop. Translates to `while (<condition>)`.
+Creates a while loop. Translates to `while (<condition>) { ... }`.
 
 ### `{for <for_statements>}`
 
-Creates a foor loop. Translates to `for (<for_statements>)`.
+Creates a foor loop. Translates to `for (<for_statements>) { ... }`.
 
 ### `{break}`
 
-Exists a loop. Loop labels are not supported (yet).
+Exists a loop - translates to `break;`. Loop labels are not supported (yet).
 
 ### `{continue}`
 
-Jumps to the start of a loop. Loop labels are not supported (yet).
+Jumps to the start of a loop - translates to `continue;`. Loop labels are not supported (yet).
 
 ### Example
 

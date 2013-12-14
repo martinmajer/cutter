@@ -113,9 +113,9 @@ Example: `{section content}<img src="./foo.jpg" width="{$width}" height="{$heigh
 
 Section creates a new variable scope. Local variables defined inside a section are not visible outside it.
 
-### `{include <filename>[ | <params>]}`
+### `{include <filename>|this[ | <params>]}`
 
-Includes another template. Filename is not enclosed in quotes and parameters are optional.
+Includes another template. Filename is not enclosed in quotes and parameters are optional. Recursive call with the same filename or `this` is supported.
 
 Example: `{include ./included.jptl}`
 

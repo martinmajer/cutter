@@ -41,7 +41,7 @@ Create a template file:
 And render it with Node.js:
 
 ```javascript
-var cutter = require("cutter");
+var cutter = require("cutter-tpl");
 
 cutter.get("your-template.jtpl", function(err, template) {
     var data = { 

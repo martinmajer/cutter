@@ -13,6 +13,7 @@ var data = {
     html:  "<p>The quick brown fox jumps over the lazy dog</p>",
     gizmo: "g.i.z.m.o",
     array: [1, 11, 111, 1111, 11111],
+    counter: 5
 };
 cutter.get(templateFile, function(err, template) {
     if (err) {

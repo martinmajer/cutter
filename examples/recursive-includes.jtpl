@@ -1,0 +1,4 @@
+Counter = {$counter}
+{if $counter > 0}
+    {include this | counter: $counter - 1}
+{/}

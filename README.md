@@ -3,6 +3,8 @@ Cutter
 
 Simple and powerful template engine for Node.js. **Under construction!**
 
+- [Syntax and API reference](docs/index.md)
+
 
 ### Features
 
@@ -17,103 +19,39 @@ Simple and powerful template engine for Node.js. **Under construction!**
 - Fast - compiles to JavaScript code
 
 
-### Basic usage
+### Getting started
 
+
+Create a template file:
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{$title}</title>
+    </head>
+    <body>
+        <h1>{$title}</h1>
+        {@$content}
+    </body>
+</html>
+```
+
+And render it with Node.js:
 
 ```javascript
 var cutter = require("cutter");
+
 cutter.get("your-template.jtpl", function(err, template) {
-    var data = { "foo": "bar" };
+    var data = { 
+        title: "Hello world",
+        content: "<p>The quick brown fox jumps over the lazy dog.</p>"
+    };
     var output = template.fetch(data);
 });
 ```
 
+### Documentation
 
-### Syntax overview
-
-```smarty
-{* template variable output *}
-{$foo}
-
-{* unescaped template variable with HTML *}
-{@$foo}
-
-{* inline JavaScript, local variable output *}
-{> var meaningOfLife = 42; }
-{meaningOfLife}
-
-{* if condition *}
-{if meaningOfLife === 42}
-    {$foo.bar}
-{else}
-    {$bar.foo}
-{/}
-
-{* while loop *}
-{> var i = 0}
-{while i < meaningOfLife}
-    {$gizmo.hoozit[i++]}
-{/}
-
-{* for loop *}
-{for var i = 0; i < meaningOfLife; i++}
-    I = {i}
-{/}
-```
-    
-### Template inheritance
-
-Cutter supports simple but powerful template inheritance with virtual blocks, parts of templates which can be overriden in child templates.
-
-Parent template:
-
-```smarty
-<html>
-    <head>
-        <meta charset="utf-8">
-        <title>{virtual title}</title>
-    </head>
-    <body>
-        {virtual content}
-    </body>
-</html>
-```
-    
-Child template:
-
-```smarty
-{parent parent.jtpl}
-{section title}My title{/}
-{section content}
-    <h1>Page content</h1>
-    <p>
-        Lorem ipsum dolor sit amet...
-    </p>
-{/}
-```
-    
-### Template cutouts
-
-Template cutouts are a nice feature which allows you to render only selected parts of templates. This can be extremely useful in AJAX applications.
-
-```smarty
-<h1>Table</h1>
-{cutout "table"}
-    <table>
-        <tbody>
-            {for var i = 0; i < $data.length; i++}
-                {cutout "row" + i}
-                    <tr>
-                        <th>{i}</th>
-                        <td>{$data[i]}</td>
-                    </tr>
-                {/}
-            {/}
-        </tbody>
-    </table>
-{/}
-```
-
-You can render only the HTML table, or even individual rows!
-
-Template cutouts work even with inheritance and included templates.
+For syntax specification and API reference, please see the [documentation](docs/index.md).
